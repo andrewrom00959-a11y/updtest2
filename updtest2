@@ -2589,6 +2589,18 @@ local function f_start()
 												LobbyUI:FireServer(false,{
 													Total = 1
 												})
+												if values["auto_farm_night2"] == true then
+													LobbyUI:FireServer(false,{
+														Night = "Night2"
+													})
+												else
+													LobbyUI:FireServer(false,{
+														Night = "Night1"
+													})
+													LobbyUI:FireServer(false,{
+														Modifier = {"Party", true}
+													})
+												end
 												if values["auto_farm_night2"] == false then
 													LobbyUI:FireServer(false,{
 														Modifier = {"Thunderstorm", true}
@@ -2603,18 +2615,6 @@ local function f_start()
 												LobbyUI:FireServer(false,{
 													Modifier = {"Blizzard", true}
 												})
-												if values["auto_farm_night2"] == true then
-													LobbyUI:FireServer(false,{
-														Night = "Night2"
-													})
-												else
-													LobbyUI:FireServer(false,{
-														Night = "Night1"
-													})
-													LobbyUI:FireServer(false,{
-														Modifier = {"Party", true}
-													})
-												end
 												LobbyUI:FireServer(false,{
 													Start = true
 												})
