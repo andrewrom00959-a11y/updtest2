@@ -6802,4 +6802,7 @@ else
 	if game.PlaceId == 14896802601 then
 		auto_farmf()
 	end
+	if game.PlaceId == 16667550979 then
+		auto_farmf()
+	end
 end
