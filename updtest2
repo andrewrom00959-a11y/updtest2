@@ -788,6 +788,8 @@ local function auto_farmf()
 				temprature.Enabled = false
 			end
 			HumanoidRootPart.CFrame = CFrame.new(-230.071213, 82.3999481, 86.754158, 0.9999336, -2.41080689e-09, -0.0115254419, 2.27840591e-09, 1, -1.15008456e-08, 0.0115254419, 1.14738219e-08, 0.9999336)
+		elseif objectiveString == "Go inside the factory" then
+			HumanoidRootPart.CFrame = CFrame.new(-222.361343, 82.3999481, 65.2713165, 0.0371875763, -7.8290249e-08, 0.999308288, -5.98799446e-08, 1, 8.0572768e
 		end
 	end
 end
