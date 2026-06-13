@@ -760,28 +760,74 @@ local function auto_farmf()
 		end)
 	end
 	if game.PlaceId == 16667550979 then
-		if game:GetService("ReplicatedStorage").GameState.Objective.Value == "Listen to the voicemail" then
-			print("listen to the voicemail")
-			HumanoidRootPart.CFrame = CFrame.new(-238.064545, 82.3999481, 57.1802673, -0.717608809, -2.48318504e-08, 0.696446359, -3.7755548e-08, 1, -3.24772298e-09, -0.696446359, -2.86253101e-08, -0.717608809)
-			fireclickdetector(workspace.VoiceRecorder.ClickDetector)
-		elseif game:GetService("ReplicatedStorage").GameState.Objective.Value == "Punch in for work" then
-			HumanoidRootPart.CFrame = CFrame.new(-295.947601, 82.3999481, 15.8830614, -0.999993265, 9.11630096e-08, -0.00366411521, 9.0936112e-08, 1, 6.20895975e-08, 0.00366411521, 6.17559834e-08, -0.999993265)
-			fireclickdetector(workspace.PunchIn.ClickDetector)
-		elseif game:GetService("ReplicatedStorage").GameState.Objective.Value == "Prepare for your shift" then
-			HumanoidRootPart.CFrame = CFrame.new(-295.947601, 82.3999481, 15.8830614, -0.999993265, 9.11630096e-08, -0.00366411521, 9.0936112e-08, 1, 6.20895975e-08, 0.00366411521, 6.17559834e-08, -0.999993265)
-			if workspace.PunchIn.ClickDetector.MaxActivationDistance ~= 0 then
-				fireclickdetector(workspace.PunchIn.ClickDetector)
+		game:GetService("RunService").Heartbeat:Connect(function()
+			if game.Players.LocalPlayer.Character then
+				if game:GetService("ReplicatedStorage").GameState.Objective.Value == "Listen to the voicemail" then
+					game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-238.064545, 82.3999481, 57.1802673, -0.717608809, -2.48318504e-08, 0.696446359, -3.7755548e-08, 1, -3.24772298e-09, -0.696446359, -2.86253101e-08, -0.717608809)
+					fireclickdetector(workspace.VoiceRecorder.ClickDetector)
+				elseif game:GetService("ReplicatedStorage").GameState.Objective.Value == "Punch in for work" then
+					game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-295.947601, 82.3999481, 15.8830614, -0.999993265, 9.11630096e-08, -0.00366411521, 9.0936112e-08, 1, 6.20895975e-08, 0.00366411521, 6.17559834e-08, -0.999993265)
+					fireclickdetector(workspace.PunchIn.ClickDetector)
+				elseif game:GetService("ReplicatedStorage").GameState.Objective.Value == "Prepare for your shift" then
+					game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-295.947601, 82.3999481, 15.8830614, -0.999993265, 9.11630096e-08, -0.00366411521, 9.0936112e-08, 1, 6.20895975e-08, 0.00366411521, 6.17559834e-08, -0.999993265)
+					if workspace.PunchIn.ClickDetector.MaxActivationDistance ~= 0 then
+						fireclickdetector(workspace.PunchIn.ClickDetector)
+					end
+				elseif game:GetService("ReplicatedStorage").GameState.Objective.Value == "Survive the night." then
+					local temprature = game.Players.LocalPlayer.Character:FindFirstChild("Temperature")
+					if temprature then
+						temprature.Enabled = false
+					end
+					game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-230.071213, 82.3999481, 86.754158, 0.9999336, -2.41080689e-09, -0.0115254419, 2.27840591e-09, 1, -1.15008456e-08, 0.0115254419, 1.14738219e-08, 0.9999336)
+				elseif game:GetService("ReplicatedStorage").GameState.Objective.Value == "Go inside the factory" then
+					game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-222.361343, 82.3999481, 65.2713165, 0.0371875763, -7.8290249e-08, 0.999308288, -5.98799446e-08, 1, 8.0572768e-08, -0.999308288, -6.28348289e-08, 0.0371875763)
+				end
+				
+			else
+				if already_night2_start == false then
+					already_night2_start = true
+					local TweenService = game:GetService("TweenService")
+					local ScreenGui = script:WaitForChild("ScreenGui")
+					ScreenGui.TextLabel.Visible = false
+					ScreenGui.TextButton.Visible = false
+					ScreenGui.BG.BackgroundTransparency = 0
+					ScreenGui.Frame.BackgroundTransparency = 1
+					task.wait()
+					game.Lighting.ClockTime = 16
+					game.Lighting.Atmosphere.Density = 0.4
+					workspace.Terrain.Clouds.Enabled = true
+					if workspace:FindFirstChild("Christmas") or game.ReplicatedStorage.GameState.Blizzard.Value then
+						workspace.Sounds.SnowyAmbience.Volume = 1
+					else
+						workspace.Sounds.OutsideRain.Volume = 1
+					end
+					workspace.Sounds.ThunderRumbling.Volume = 0.4
+					workspace.Sounds.Thunder:Stop()
+					workspace.Sounds.Birds:Stop()
+					workspace.Sounds.Thunder.Volume = 3
+					if #game.Lighting.GameSky:GetChildren() > 0 and (not game.ReplicatedStorage.GameState.Bloodmoon.Value and game.Lighting:FindFirstChild("Sky")) then
+						game.Lighting.Sky:Destroy()
+						game.Lighting.GameSky.Sky.Parent = game.Lighting
+					end
+					game.ReplicatedStorage.Remotes.LoadCharacter:FireServer()
+					for k, v in pairs(LocalPlayer.PlayerScripts:GetChildren()) do
+						if v:IsA("LocalScript") and not v.Enabled then
+							v.Enabled = true
+						end
+					end
+					workspace.CutsceneMap:Destroy()
+					repeat
+						task.wait()
+					until workspace.Camera.CameraType ~= Enum.CameraType.Scriptable
+					TweenService:Create(ScreenGui.BG, TweenInfo.new(4), {
+						BackgroundTransparency = 1
+					}):Play()
+					task.wait(4)
+					ScreenGui:Destroy()
+					script:Destroy()
+				end
 			end
-		elseif game:GetService("ReplicatedStorage").GameState.Objective.Value == "Survive the night." then
-			local temprature = Character:FindFirstChild("Temperature")
-			if temprature then
-				temprature.Enabled = false
-			end
-			HumanoidRootPart.CFrame = CFrame.new(-230.071213, 82.3999481, 86.754158, 0.9999336, -2.41080689e-09, -0.0115254419, 2.27840591e-09, 1, -1.15008456e-08, 0.0115254419, 1.14738219e-08, 0.9999336)
-		elseif game:GetService("ReplicatedStorage").GameState.Objective.Value == "Go inside the factory" then
-			print("Inside the factory")
-			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-222.361343, 82.3999481, 65.2713165, 0.0371875763, -7.8290249e-08, 0.999308288, -5.98799446e-08, 1, 8.0572768e-08, -0.999308288, -6.28348289e-08, 0.0371875763)
-		end
+		end)
 	end
 end
 local function f_start()
