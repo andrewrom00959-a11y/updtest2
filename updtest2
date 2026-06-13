@@ -391,7 +391,9 @@ end
 
 local changelist = {
 	"Auto Farm Night 2",
-	"Bug fixes"
+	"Fixed version 2.0.7 default version bug",
+	"Fixed keybinds notifications bugs",
+	"Other Bugs fixes"
 }
 
 local support_fire_click_detector = false
@@ -5601,7 +5603,9 @@ local function f_start()
 											if if_d then
 												local ClickDetector = lightModel.Switch.Detector:FindFirstChild("ClickDetector")
 												if ClickDetector then
-													fireclickdetector(ClickDetector)
+													if ClickDetector.MaxActivationDistance > 0 then
+														fireclickdetector(ClickDetector)
+													end
 												end
 											end
 										end
@@ -5671,7 +5675,9 @@ local function f_start()
 															if if_d then
 																local ClickDetector = lightModel:FindFirstChild("ClickDetector")
 																if ClickDetector then
-																	fireclickdetector(ClickDetector)
+																	if ClickDetector.MaxActivationDistance > 0 then
+																		fireclickdetector(ClickDetector)
+																	end
 																end
 															end
 														end
