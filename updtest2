@@ -760,39 +760,50 @@ local function auto_farmf()
 		end)
 	end
 	if game.PlaceId == 16667550979 then
-		local TweenService = game:GetService("TweenService")
-		local SkipRemote = game.ReplicatedStorage:WaitForChild("Remotes"):WaitForChild("Skip")
-		local SkipUIFrame = game.Players.LocalPlayer.PlayerGui.CutsceneUI:WaitForChild("SkipFrame")
-		local SkipButton = game.Players.LocalPlayer.PlayerGui.CutsceneUI:WaitForChild("SkipButton")
-		if already_night2_start == false then
-			already_night2_start = true
-			SkipRemote:FireServer()
-			SkipRemote.OnClientEvent:Connect(function(shouldShowSkipUI)
-				if shouldShowSkipUI == nil then
-					TweenService:Create(SkipUIFrame, TweenInfo.new(0.5), {
-						BackgroundTransparency = 0
-					}):Play()
-					task.wait(1)
-					TweenService:Create(SkipUIFrame, TweenInfo.new(0.5), {
-						BackgroundTransparency = 1
-					}):Play()
-					return
-				end
-				if shouldShowSkipUI then
-					SkipButton.Text = "SKIP"
-					SkipButton.TextTransparency = 1 -- Делаем текст полностью прозрачным (чтобы он появился с анимацией)
-					SkipButton.Visible = true -- Делаем кнопку видимой
-					TweenService:Create(SkipButton, TweenInfo.new(0.5), {
-						TextTransparency = 0.25
-					}):Play()
+		local ScreenGui = game.Players.LocalPlayer.PlayerGui:FindFirstChild("ScreenGui")
+		if ScreenGui then
+			if already_night2_start == false then
+				local TweenService = game:GetService("TweenService")
+				already_night2_start = true
+				ScreenGui.TextLabel.Visible = false
+				ScreenGui.TextButton.Visible = false
+				ScreenGui.BG.BackgroundTransparency = 0
+				ScreenGui.Frame.BackgroundTransparency = 1
+				task.wait()
+				game.Lighting.ClockTime = 16
+				game.Lighting.Atmosphere.Density = 0.4
+				workspace.Terrain.Clouds.Enabled = true
+				if workspace:FindFirstChild("Christmas") or game.ReplicatedStorage.GameState.Blizzard.Value then
+					workspace.Sounds.SnowyAmbience.Volume = 1
 				else
-					TweenService:Create(SkipButton, TweenInfo.new(0.5), {
-						TextTransparency = 1
-					}):Play()
-					task.wait(0.5)
-					SkipButton.Visible = false
+					workspace.Sounds.OutsideRain.Volume = 1
 				end
-			end)
+				workspace.Sounds.ThunderRumbling.Volume = 0.4
+				workspace.Sounds.Thunder:Stop()
+				workspace.Sounds.Birds:Stop()
+				workspace.Sounds.Thunder.Volume = 3
+				if #game.Lighting.GameSky:GetChildren() > 0 and (not game.ReplicatedStorage.GameState.Bloodmoon.Value and game.Lighting:FindFirstChild("Sky")) then
+					game.Lighting.Sky:Destroy()
+					game.Lighting.GameSky.Sky.Parent = game.Lighting
+				end
+				game.ReplicatedStorage.Remotes.LoadCharacter:FireServer()
+				for k, v in pairs(LocalPlayer.PlayerScripts:GetChildren()) do
+					if v:IsA("LocalScript") and not v.Enabled then
+						v.Enabled = true
+					end
+				end
+				workspace.CutsceneMap:Destroy()
+				repeat
+					task.wait()
+				until workspace.Camera.CameraType ~= Enum.CameraType.Scriptable
+
+				TweenService:Create(ScreenGui.BG, TweenInfo.new(4), {
+					BackgroundTransparency = 1
+				}):Play()
+				task.wait(4)
+				ScreenGui:Destroy()
+				game.Players.LocalPlayer.PlayerScripts.Cutscene:Destroy()
+			end
 		end
 		wait(0.5)
 		if game.Players.LocalPlayer.PlayerGui.DialogueUI.TimeLabel.Text == "6 AM" then
