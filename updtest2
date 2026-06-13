@@ -807,7 +807,6 @@ local function auto_farmf()
 				end)()
 			end
 		end
-		wait(0.5)
 		if game.Players.LocalPlayer.PlayerGui.DialogueUI.TimeLabel.Text == "6 AM" then
 			if already_night2_end == false then
 				already_night2_end = true
@@ -823,12 +822,10 @@ local function auto_farmf()
 		if game:GetService("Players").LocalPlayer.PlayerGui.DialogueUI.ObjectiveFrame.ObjectiveText.Text == "Go inside the factory" then
 			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-222.361343, 82.3999481, 65.2713165, 0.0371875763, -7.8290249e-08, 0.999308288, -5.98799446e-08, 1, 8.0572768e-08, -0.999308288, -6.28348289e-08, 0.0371875763)
 		end
-		wait(0.5)
 		if game:GetService("Players").LocalPlayer.PlayerGui.DialogueUI.ObjectiveFrame.ObjectiveText.Text == "Listen to the voicemail" then
 			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-238.064545, 82.3999481, 57.1802673, -0.717608809, -2.48318504e-08, 0.696446359, -3.7755548e-08, 1, -3.24772298e-09, -0.696446359, -2.86253101e-08, -0.717608809)
 			fireclickdetector(workspace.VoiceRecorder.ClickDetector)
 		end
-		wait(0.1)
 		if game:GetService("Players").LocalPlayer.PlayerGui.DialogueUI.ObjectiveFrame.ObjectiveText.Text == "Punch in for work" then
 			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-295.947601, 82.3999481, 15.8830614, -0.999993265, 9.11630096e-08, -0.00366411521, 9.0936112e-08, 1, 6.20895975e-08, 0.00366411521, 6.17559834e-08, -0.999993265)
 			fireclickdetector(workspace.PunchIn.ClickDetector)
