@@ -760,21 +760,6 @@ local function auto_farmf()
 		end)
 	end
 	if game.PlaceId == 16667550979 then
-		if game.Players.LocalPlayer.Character then
-			already_night2_start = true
-		end
-		if game.Players.LocalPlayer.PlayerGui.DialogueUI.TimeLabel.Text == "6 AM" then
-			if already_night2_end == false then
-				already_night2_end = true
-				wait(4)
-				local SkipRemote = game.ReplicatedStorage:WaitForChild("Remotes"):WaitForChild("Skip")
-				SkipRemote:FireServer()
-				wait(1)
-				game.ReplicatedStorage.Remotes.Continue:FireServer(false)
-				game.Players.LocalPlayer:WaitForChild("Ready"):SetAttribute("Retry", 1)
-				game.Players.LocalPlayer:WaitForChild("Ready").Value = true
-			end
-		end
 		print("Night2")
 		if game:GetService("Players").LocalPlayer.PlayerGui.DialogueUI.ObjectiveFrame.ObjectiveText.Text == "Go inside the factory" then
 			print("Inside the factory")
