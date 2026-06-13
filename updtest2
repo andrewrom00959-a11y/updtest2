@@ -1,4 +1,3 @@
-
 local start_value_f = workspace:FindFirstChild("EZKA")
 if start_value_f then return end
 print("EZKA HUB")
@@ -799,6 +798,7 @@ local function auto_farmf()
 			else
 				if already_night2_start == false then
 					already_night2_start = true
+					wait(1)
 					local TweenService = game:GetService("TweenService")
 					local ScreenGui = game.Players.LocalPlayer.PlayerGui:WaitForChild("ScreenGui")
 					ScreenGui.TextLabel.Visible = false
